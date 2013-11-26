@@ -1,0 +1,15 @@
+{% extends "example/example.html" %}
+{% block head %}
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+{% endblock head %}
+
+{% block container %}
+<br/>
+<br/>
+<br/>
+<li><a href="{% url 'cicuExample-freecrop' %}">cicu-freecrop</a></li>
+<li><a href="{% url 'cicuExample-fixedratio' %}">cicu-fixedratio</a></li>
+<li><a href="{% url 'cicuExample-warningsize' %}">cicu-warningsize</a></li>
+{% endblock container %}
+
