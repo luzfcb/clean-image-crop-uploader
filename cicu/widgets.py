@@ -54,14 +54,20 @@ class CicuUploaderInput(forms.ClearableFileInput):
         else:
             filename = ''
         attrs.update({
-            'class': attrs.get('class', '') + 'ajax-upload',
             'data-filename': filename, # This is so the javascript can get the actual value
             'data-required': self.is_required or '',
             'data-upload-url': reverse('ajax-upload'),
             'data-crop-url': reverse('cicu-crop'),
             'type': 'file',
-            'accept' : 'image/*',
+            'accept': 'image/*',
         })
+        class_ = 'ajax-upload'
+        final_attrs = self.build_attrs(self.attrs, type=self.input_type, name=name)
+        if 'class' in final_attrs:
+            attrs['class'] = u'%s %s' % (final_attrs['class'], mark_safe(class_))
+        else:
+            attrs['class'] = mark_safe(class_)
+
         output = super(CicuUploaderInput, self).render(name, value, attrs)
         option = self.optionsInput % self.options
 
