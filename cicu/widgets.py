@@ -82,7 +82,7 @@ class CicuUploaderInput(forms.ClearableFileInput):
             return file  # Default behaviour
         elif name in data:  # This means a file id was specified in the POST field
             try:
-                uploaded_file = UploadedFile.objects.get(id=data.get('image'))
+                uploaded_file = UploadedFile.objects.get(id=data.get(name))
                 img = Image.open( cStringIO.StringIO(uploaded_file.file.read()), mode='r' )
 
                 width, height = img.size
