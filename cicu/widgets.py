@@ -105,6 +105,7 @@ class CicuUploaderInput(forms.ClearableFileInput):
             "cicu/js/jquery.Jcrop.min.js",
             "cicu/js/jquery.iframe-transport.js",
             "cicu/js/cicu-widget.js",
+            "cicu/js/cicu-startautodiscover.js",
             )
 
         css = {'all': ("cicu/css/jquery.Jcrop.min.css", "cicu/css/cicu-widget.css")}
