@@ -29,6 +29,8 @@ class CicuUploaderInput(forms.ClearableFileInput):
         self.options += (options.get('sizeWarning', 'True'),)
         self.options += (options.get('ratioWidth', ''),)
         self.options += (options.get('ratioHeight', ''),)
+        self.options += (options.get('boxWidth', ''),)
+        self.options += (options.get('boxHeight', ''),)
 
         self.options += (options.get('onReady', 'null'),)
         self.options += (options.get('onUpload', 'null'),)
