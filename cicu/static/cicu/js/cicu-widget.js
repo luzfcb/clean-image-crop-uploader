@@ -45,6 +45,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             sizeWarning : 'True',
             ratioWidth :'800',
             ratioHeight :'600',
+            boxWidth :'800',
+            boxHeight :'600',
             onReady: null,
             onUpload: null,
             onComplete: null,
@@ -136,7 +138,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         $.ajax(this.$element.data('crop-url'), {
             iframe : true,
             data : {cropping : this.$cropping.val(),
-            id : this.$hiddenElement.data('imageId')},
+                id : this.$hiddenElement.data('imageId'),
+                boxHeight : this.options.boxHeight,
+                boxWidth : this.options.boxWidth},
             type: 'POST',
             dataType: 'json',
             success: function(data) { self.cropDone(data); },
@@ -272,7 +276,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         var $self = this;
         $.each(['jpg', 'jpeg', 'png', 'gif'], function(i, ext) {
             if(filename.toLowerCase().slice(-ext.length) == ext) {
-                var crop_input = '<input data-size-warning="'+$self.options.sizeWarning+'"  data-width="'+$self.options.ratioWidth+'" data-height="'+$self.options.ratioHeight+'"  data-allow-fullsize="false" name="cropping" maxlength="255" value="300,100,600,600" class="image-ratio" data-image-field="image_field" id="id_cropping" data-adapt-rotation="false" type="text" data-my-name="cropping" style="display: none;" />';
+                var crop_input = '<input data-size-warning="'+$self.options.sizeWarning+'"  data-width="'+$self.options.ratioWidth+'" data-height="'+$self.options.ratioHeight+'"  data-box-width="'+$self.options.boxWidth+'" data-box-height="'+$self.options.boxHeight+'"  data-allow-fullsize="false" name="cropping" maxlength="255" value="300,100,600,600" class="image-ratio" data-image-field="image_field" id="id_cropping" data-adapt-rotation="false" type="text" data-my-name="cropping" style="display: none;" />';
                 output += '<input data-org-width="'+width+'" data-org-height="'+height+'" data-field-name="image_field" class="crop-thumb hide" src="'+filename+'"  data-thumbnail-url="'+filename+'" />' + crop_input;
                 return false;
             }
@@ -469,3 +473,4 @@ var image_cropping = {
         }
     }
 };
+
