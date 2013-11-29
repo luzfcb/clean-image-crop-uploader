@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.utils import simplejson
+import json as simplejson
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.decorators.clickjacking import xframe_options_exempt
@@ -81,14 +81,18 @@ def crop(request):
 
         width = abs(values[2] - values[0])
         height = abs(values[3] - values[1])
-        print('width: ', width, ' height: ', height)
 
         if width and height and (width != img.size[0] or height != img.size[1]):
             logger.info('Crop values - w:%d h:%d maxW:%d maxH:%d' % (width, height, img.size[0], img.size[1],))
             try:
                 croppedImage = img.crop(values).resize((width,height), Image.ANTIALIAS)
                 if boxWidth != None and boxHeight != None:
-                    croppedImage = croppedImage.resize((boxWidth,boxHeight), Image.ANTIALIAS)
+                    largura_imagem = croppedImage.size[0]
+                    altura_imagem = croppedImage.size[1]
+                    altura_desejada = int(boxHeight)
+                    largura_proporcional = (largura_imagem * altura_desejada) / float(altura_imagem)
+                    croppedImage = croppedImage.resize((int(largura_proporcional), altura_desejada), Image.ANTIALIAS)
+                    #croppedImage = croppedImage.resize((boxWidth,boxHeight), Image.ANTIALIAS)
                 logger.info('Croppped image %s'%croppedImage)
             except Exception as e:
                 logger.error('Crop Exception: %s'%e)
@@ -104,11 +108,12 @@ def crop(request):
         data = {
             'path': cropped_file.file.url,
             'id' : cropped_file.id,
-            'origid': imageId,
+            'oldid': imageId,
         }
 
         return HttpResponse(simplejson.dumps(data))
 
     #except Exception, e:
     #   return HttpResponseBadRequest(simplejson.dumps({'errors': 'illegal request'}))
+
 
