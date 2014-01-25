@@ -61,6 +61,8 @@ Configuration
                 'ratioWidth': '600',       #fix-width ratio, default 0
                 'ratioHeight':'400',       #fix-height ratio , default 0
                 'sizeWarning': 'False',    #if True the crop selection have to respect minimal ratio size defined above. Default 'False'
+                'boxWidth': '113',
+                'boxHeight': '151',
             }
             widgets = {
                 'image': CicuUploaderInput(options=cicuOptions)
